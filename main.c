@@ -11,14 +11,16 @@ void loop(FILE *file, char c) {
   while (*cursor != 0) {
     offset = 1;
     while((c = fgetc(file)) != ']' && c != EOF) {
-      if (c != '\n') {
-        offset++;
+      offset++;
+      
+      if (c == '\n') {
+        continue;
       }
 
       execution(file, c);
     }
 
-    if (c == EOF) {
+    if (c == EOF || *cursor == 0) {
       return;
     }
 
@@ -26,14 +28,22 @@ void loop(FILE *file, char c) {
   }
 }
 
-
+// Program execution
 void execution(FILE *file, char c){
     switch (c) {
       case '+':
-        (*cursor)++;
+        if (*cursor == 255){
+          *cursor = 0;
+        } else {
+          (*cursor)++;  
+        }        
         break;
       case '-':
-        (*cursor)--;
+        if (*cursor == 0){
+          *cursor = 255;
+        } else {
+          (*cursor)--;  
+        } 
         break;
       case '>':
         cursor++;
@@ -82,6 +92,5 @@ int main() {
   free(mem);
 
   fclose(file);
-
   return 0;
 }
