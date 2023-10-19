@@ -70,7 +70,7 @@ void execution(FILE *file, char c){
 int main() {
   puts("Brainfuck C");
 
-  FILE *file = fopen("code.bf", "r");
+  FILE *file = fopen("code.bf", "rb+");
 
   int move_count = 0;
 
